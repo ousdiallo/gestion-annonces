@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ announce.title }}
+{% endblock %}
+
+{% block body %}
+	<div class="show container my-5 p-5" style="background-image: url({{ announce.coverImage }})">
+		<div class="container">
+			<h1 class="show">{{announce.title}}</h1>
+			<p>{{announce.introduction}}</p>
+			<p class="show h2">
+				<strong>{{announce.rooms}}
+					chambres</strong>
+				pour
+				<strong>{{announce.price | number_format(0, ',', ' ')}}
+					F</strong>
+			</p>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 mb-3">
+				{{ announce.description }}
+				<hr>
+				{% if announce.comments|length > 0 %}
+					<h2 class="mb-3">Commentaires:</h2>
+					{% for comment in announce.comments %}
+						<div class="bg-light rounded mb-3 py-3 px-3">
+							<strong>{{ comment.author }}</strong>
+							a dit :
+							<blockquote>
+								{{comment.content}}
+							</blockquote>
+						</div>
+					{% endfor %}
+				{% else %}
+					<h2>Cette annonce n'a pas encore reçu de commentaires ...</h2>
+				{% endif %}
+			</div>
+			<div class="col">
+				<div class="row mb-3 align-items-center">
+					<div class="col-3">
+						<img src="https://randomuser.me/api/portraits/thumb/men/38.jpg" class="avatar avatar-medium rounded-circle" alt="Avatar">
+					</div>
+					<div class="col">
+						<h3>Abdou Gueye</h3>
+						<span class="badge badge-primary">23 annonces</span>
+						<p>
+							Médina Rue, 12</p>
+					</div>
+				</div>
+				<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda, voluptas. Id beatae et fugit facere debitis quia ipsa nemo saepe illum recusandae! Voluptatum delectus minus quas molestias id tenetur a!</p>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

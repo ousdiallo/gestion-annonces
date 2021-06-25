@@ -3,29 +3,47 @@
 namespace App\DataFixtures;
 
 use App\Entity\Announce;
-use DateTime;
+use App\Entity\Comment;
+use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Cocur\Slugify\Slugify;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-
+        $faker = Factory::create('fr_FR');
         for ($i = 0; $i < 20; $i++) {
             $announce = new Announce();
-            $announce->setTitle("chambre n° $i")
-                ->setSlug("chambre-$i")
-                ->setDescription("Je vous loue ma chambre avec salle bain neuve...")
+            $announce->setTitle($faker->sentence(3, false))
+                ->setIntroduction($faker->sentence())
+                ->setDescription($faker->text(300))
                 ->setPrice(mt_rand(30000, 60000))
-                ->setAddress("quartier $i")
-                ->setCoverImage("https://via.placeholder.com/500x300")
-                ->setRooms(mt_rand(0, 5))
+                ->setAddress($faker->address())
+                ->setCoverImage("https://picsum.photos/1200/350?random=" . mt_rand(1, 55000))
+                ->setRooms(mt_rand(1, 5))
                 ->setIsAvailable(mt_rand(0, 1))
-                ->setCreatedAt(new DateTime());
+                ->setCreatedAt($faker->dateTimeBetween('-3 month', 'now'));
 
-            $manager->persist($announce);  // Permet à Doctrine d'enregistrer l'annonce dans la DB
+
+            for ($j = 0; $j < mt_rand(0, 4); $j++) {
+                $image = new Image();
+                $image->setImageUrl("https://picsum.photos/650/450?random=" . mt_rand(1, 55000))
+                    ->setDescription($faker->sentence(3, false));
+                $announce->addImage($image);
+            }
+
+            for ($k = 0; $k < mt_rand(0, 5); $k++) {
+                $comment = new Comment();
+                $comment->setAuthor($faker->name())
+                    ->setEmail($faker->email())
+                    ->setContent($faker->text())
+                    ->setCreatedAt($faker->dateTimeBetween('-3 month', 'now'));
+                $announce->addComment($comment);
+            }
+            $manager->persist($announce);
         }
 
         $manager->flush();   // Execute l'enregistrement des données persistées 

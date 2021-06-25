@@ -7,27 +7,39 @@
 {% block body %}
 	<div class="container my-5">
 		<div class="row">
-			<div class="col-md-4">
-				<div class="card mb-3">
-					<h5 class="card-header">2 Chambres, 30 000 F /mois</h5>
-					<svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
-						<rect width="100%" height="100%" fill="#868e96"></rect>
-						<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
-					</svg>
-					<div class="card-body">
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-					<div class="card-body">
-						<a href="#" class="card-link btn btn-primary">
-							Détails</a>
-					</div>
-					<div class="card-footer text-muted text-center">
-						Il y 2 jours
-						<i class="fas fa-map-marker"></i>
-						<strong>Mariste</strong>
+			{% for a in announces %}
+				<div class="col-md-4">
+					<div class="card mb-3 shadow-sm bg-white rounded">
+						<div class="card-header text-center">
+							{{ a.rooms}}
+							chambres,
+							<strong>{{ a.price | number_format(0, ',', ' ')}}F / mois</strong>
+							<br>
+							<small>{{ a.comments | length }}
+								commentaires</small>
+						</div>
+						<a href="#">
+							<img src="{{ a.coverImage }}" alt="image" style="height: 200px; width: 100%; display: block">
+						</a>
+						<div class="card-body">
+							<h4 class="card-title">
+								<a href="#">
+									{{ a.title }}
+								</a>
+							</h4>
+							<p class="card-text">{{ a.introduction}}
+							</p>
+							<a href="{{ path('announces_show', {'slug': a.slug})}}" class="btn btn-primary float-right">Détails !</a>
+						</div>
+						<div class="card-footer text-muted text-center">
+							<i class="fas fa-map-marker"></i>
+							<small>{{ a.address }}</small>
+							<br>
+							<small>{{ a.createdAt | ago(locale='fr')}}</small>
+						</div>
 					</div>
 				</div>
-			</div>
+			{% endfor %}
 		</div>
 	</div>
 
