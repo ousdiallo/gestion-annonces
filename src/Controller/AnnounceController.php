@@ -14,7 +14,7 @@ class AnnounceController extends AbstractController
     public function index(AnnounceRepository $repo): Response
     {
         return $this->render('announce/index.html.twig', [
-            'announces' => $repo->findAll()
+            'announces' => $repo->findBy(['isAvailable' => true], ['createdAt' => 'DESC'], 10)
         ]);
     }
 
