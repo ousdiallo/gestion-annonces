@@ -19,6 +19,17 @@ class AnnounceRepository extends ServiceEntityRepository
         parent::__construct($registry, Announce::class);
     }
 
+    public function groupAnnounceByDate()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->select('SUBSTRING(a.createdAt, 1, 7) as announceMonth, COUNT(a) as count')
+            ->groupBy('announceMonth');
+        return $query->getQuery()->getResult();
+    }
+
+
+
+
     // /**
     //  * @return Announce[] Returns an array of Announce objects
     //  */

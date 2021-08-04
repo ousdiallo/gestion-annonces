@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Statistiques
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<h3 class="text-center">Statistiques</h3>
+		<canvas id="announces" width="400" height="200"></canvas>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js" integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script>
+		let announces = document.querySelector("#announces")
+let announcesGrap = new Chart(announces, {
+type: "bar",
+data: {
+labels: {{ announcesMonth | raw }},
+datasets: [
+{
+label: "Nombre d'annonces publiées par mois",
+data: {{ announcesCount| raw }},
+backgroundColor: [
+'rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)',
+'rgba(255, 206, 86, 0.2)',
+'rgba(75, 192, 192, 0.2)',
+'rgba(153, 102, 255, 0.2)',
+'rgba(255, 159, 64, 0.2)'
+]
+}
+]
+}
+});
+	</script>
+{% endblock %}
