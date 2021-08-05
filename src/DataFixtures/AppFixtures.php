@@ -2,13 +2,12 @@
 
 namespace App\DataFixtures;
 
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\Entity\Announce;
 use App\Entity\Comment;
 use App\Entity\Image;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Cocur\Slugify\Slugify;
 
 class AppFixtures extends Fixture
 {
